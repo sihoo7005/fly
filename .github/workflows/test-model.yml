@@ -39,10 +39,22 @@ jobs:
       - name: Download and verify actual neuron and connection files
         run: |
           "$MODEL_PYTHON" - <<'PY'
+          import os
+          import shutil
           from pathlib import Path
-          from download_data import FILES, download
+          from urllib.request import urlopen
+          from download_data import FILES, valid
+          folder = Path('data/raw')
+          folder.mkdir(parents=True, exist_ok=True)
           for name in ('proofread_root_ids_783.npy', 'proofread_connections_783.feather'):
-              download(name, *FILES[name], Path('data/raw'))
+              print(f'Downloading verified release asset: {name}', flush=True)
+              url = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/releases/download/flywire-v783/{name}"
+              target = folder / name
+              with urlopen(url, timeout=60) as source, target.open('wb') as output:
+                  shutil.copyfileobj(source, output, length=1024 * 1024)
+              if not valid(target, *FILES[name]):
+                  raise SystemExit(f'Release asset checksum mismatch: {name}')
+              print(f'Verified: {name}', flush=True)
           PY
       - name: Build and run the actual FlyWire network
         run: |
