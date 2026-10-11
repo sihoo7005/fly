@@ -1,0 +1,58 @@
+name: Test self-written FlyWire model
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - model.py
+      - flywire_data.py
+      - test_model.py
+      - test_flywire_data.py
+      - .github/workflows/test-model.yml
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Get this exact source commit
+        run: |
+          git init .
+          git remote add origin "https://github.com/$GITHUB_REPOSITORY.git"
+          git fetch --depth=1 origin "$GITHUB_SHA"
+          git checkout --detach FETCH_HEAD
+      - name: Select runner's cached Python 3.14 standard library
+        run: |
+          candidates=( "$RUNNER_TOOL_CACHE"/Python/3.14.*/x64/bin/python3 )
+          model_python="${candidates[0]}"
+          test -x "$model_python"
+          "$model_python" -c 'from compression import zstd; import sys; print(sys.version)'
+          echo "MODEL_PYTHON=$model_python" >> "$GITHUB_ENV"
+      - name: Run unit tests and small demonstration
+        run: |
+          "$MODEL_PYTHON" -m unittest discover -v
+          "$MODEL_PYTHON" model.py demo --duration 5 --out results/demo.csv
+      - name: Download and verify actual neuron and connection files
+        run: |
+          "$MODEL_PYTHON" - <<'PY'
+          from pathlib import Path
+          from download_data import FILES, download
+          for name in ('proofread_root_ids_783.npy', 'proofread_connections_783.feather'):
+              download(name, *FILES[name], Path('data/raw'))
+          PY
+      - name: Build and run the actual FlyWire network
+        run: |
+          "$MODEL_PYTHON" model.py build
+          "$MODEL_PYTHON" model.py run --duration 10 --out results/flywire.csv
+          "$MODEL_PYTHON" - <<'PY'
+          from model import Network
+          network = Network.load('data/network.bin')
+          assert len(network.ids) == 139255
+          assert 0 < len(network.targets) <= 16847997
+          assert sum(network.synapses) > len(network.targets)
+          print('Full FlyWire network validation passed.')
+          PY
