@@ -1,4 +1,4 @@
-"""Download the two core FlyWire v783 files with Python's standard library."""
+"""Download four FlyWire v783 files with Python's standard library."""
 
 import hashlib
 import sys
@@ -9,6 +9,8 @@ BASE_URL = "https://zenodo.org/api/records/10676866/files/"
 FILES = {
     "proofread_connections_783.feather": (852022274, "f48f972d262323a102aed49af1396b8a"),
     "proofread_root_ids_783.npy": (1114168, "e0e6c19732fd8c7a4e39a2d170105421"),
+    "per_neuron_neuropil_count_pre_783.feather": (16853770, "90fcdb42c1ba05ed92820840fa1e6ba0"),
+    "per_neuron_neuropil_count_post_783.feather": (233843050, "bb5999f10920ade803d9f37097a43a56"),
 }
 
 
