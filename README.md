@@ -5,7 +5,10 @@ FlyWire v783 연결망으로 새 모델을 만들기 위한 시작 저장소입�
 
 ## 데이터 받기
 
-Python 3.9 이상과 약 1 GB의 저장 공간이 필요합니다. 추가 패키지는 필요 없습니다.
+Python 3.9 이상과 약 1.2 GB의 저장 공간이 필요합니다. 추가 패키지는 필요 없습니다.
+
+네 원본 파일은 [FlyWire v783 데이터 릴리스](https://github.com/sihoo7005/fly/releases/tag/flywire-v783)의 Assets에서도 받을 수 있습니다.
+큰 파일은 Releases에 보관하며, **Code → Download ZIP**에는 포함되지 않습니다.
 
 Windows PowerShell에서:
 
@@ -26,6 +29,8 @@ Linux와 Termux에서는 `python3 download_data.py`를 사용할 수 있습니�
 |---|---:|---|
 | `proofread_connections_783.feather` | 약 852 MB | 교정된 뉴런 사이의 연결과 영역별 시냅스 수 |
 | `proofread_root_ids_783.npy` | 약 1.11 MB | 교정된 뉴런 식별번호 목록 |
+| `per_neuron_neuropil_count_pre_783.feather` | 약 16.85 MB | 뉴런별·뇌 영역별 출력 시냅스 수 |
+| `per_neuron_neuropil_count_post_783.feather` | 약 233.84 MB | 뉴런별·뇌 영역별 입력 시냅스 수 |
 
 완료 시 배포본의 파일 크기와 MD5 체크섬을 검증합니다.
 이미 검증된 파일은 다시 받지 않습니다. 중단된 파일은 다음 실행에서 처음부터 받습니다.
@@ -42,6 +47,8 @@ Linux와 Termux에서는 `python3 download_data.py`를 사용할 수 있습니�
 
 이 데이터에는 실제 시냅스 강도나 뉴런 발화 규칙이 없습니다.
 가중치와 동역학은 모델 구현 단계에서 별도로 정합니다.
+영역별 입력·출력 집계 파일은 미교정 세그먼트도 포함한 전체 시냅스 표에서 집계한 자료입니다.
+교정된 뉴런만 분석할 때는 `proofread_root_ids_783.npy`로 필터링해야 합니다.
 
 ## 출처
 
