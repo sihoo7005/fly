@@ -1,0 +1,53 @@
+name: Publish FlyWire v783 data
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-data.yml
+      - download_data.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flywire-v783-data-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Get this exact source commit
+        run: |
+          git init .
+          git remote add origin "https://github.com/$GITHUB_REPOSITORY.git"
+          git fetch --depth=1 origin "$GITHUB_SHA"
+          git checkout --detach FETCH_HEAD
+      - name: Test downloader
+        run: python3 -m unittest test_download_data.py
+      - name: Download and verify all four files
+        run: python3 download_data.py
+      - name: Upload data and verify release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view flywire-v783 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload flywire-v783 data/raw/* --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create flywire-v783 data/raw/* --draft --target "$GITHUB_SHA" --title "FlyWire v783 data" --notes "Four unmodified files from https://zenodo.org/records/10676866. File sizes and MD5 checksums verified against the original release. Source license and citation information: https://zenodo.org/records/10676866 and https://flywire.ai/guidelines." --repo "$GITHUB_REPOSITORY"
+          fi
+          gh release view flywire-v783 --repo "$GITHUB_REPOSITORY" --json assets > release-assets.json
+          python3 - <<'PY'
+          import json
+          from download_data import FILES
+          with open('release-assets.json') as source:
+              assets = {item['name']: item['size'] for item in json.load(source)['assets']}
+          for name, (size, _) in FILES.items():
+              if assets.get(name) != size:
+                  raise SystemExit(f'Uploaded file missing or wrong size: {name}')
+          print('All four release assets verified.')
+          PY
+          gh release edit flywire-v783 --draft=false --repo "$GITHUB_REPOSITORY"
