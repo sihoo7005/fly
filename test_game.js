@@ -40,6 +40,8 @@ class FakeWorker { constructor() { globalThis.fakeWorker = this; this.messages =
 const context = { document, Math, Object, Uint8ClampedArray, Worker: FakeWorker, setTimeout, clearTimeout };
 vm.runInNewContext(`${script}\nglobalThis.game = { state, inputVector, act, makeRow, flyTurn, setMode, startGame, show3D };`, context);
 const { state, act, makeRow, flyTurn, setMode, startGame, show3D } = context.game;
+assert.equal((elements.get('actionScores').innerHTML.match(/class="score-line/g) || []).length, 3);
+assert.match(elements.get('actionScores').innerHTML, /—/);
 for (let i = 0; i < 1000; i++) { const count = makeRow().filter(Boolean).length; assert.ok(count >= 1 && count <= 2); }
 const visualNeurons = [{ node: model.inputGroups[2][0], id: model.inputIds[2][0] }, { node: model.outputIndices[0], id: model.outputIds[0] }];
 fakeWorker.onmessage({ data: { type: 'ready', neurons: network.neurons, visualNeurons } });
@@ -67,6 +69,8 @@ assert.equal(state.lane, 0);
 assert.equal(state.reward, 1);
 assert.equal(state.turn, 1);
 assert.equal(state.analysis, null, 'calculate again for the next turn');
+assert.equal((elements.get('actionScores').innerHTML.match(/class="score-line/g) || []).length, 3);
+assert.match(elements.get('actionScores').innerHTML, /—/);
 setMode('manual');
 state.rows = [[true, true, false], [false, false, true]];
 state.done = false; state.turn = 0; state.reward = 0; state.analysis = sample;
