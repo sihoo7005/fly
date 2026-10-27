@@ -30,7 +30,7 @@ const buttons = [0, 1, 2].map(lane => ({ dataset: { lane: String(lane) }, addEve
 const document = {
   getElementById(id) {
     if (!elements.has(id)) elements.set(id, { addEventListener() {}, classList: { toggle() {} }, style: {}, width: 528, height: 264,
-      getContext() { return { createImageData(w, h) { return { data: new Uint8ClampedArray(w * h * 4) }; }, putImageData() {} }; } });
+      getContext() { return { createImageData(w, h) { return { data: new Uint8ClampedArray(w * h * 4) }; }, putImageData(image) { elements.get('neuronMap').image = image.data; } }; } });
     return elements.get(id);
   },
   querySelectorAll() { return buttons; },
@@ -64,13 +64,24 @@ for (const neuron of visualNeurons) {
   assert.equal(scene.layers[1].segmentColors[neuron.id], sample.active[neuron.node] ? '#c6f36b' : '#6b7472');
 }
 assert.equal(state.snapshotKey, '001001');
+const previousScores = elements.get('actionScores').innerHTML;
+const previousMap = elements.get('neuronMap').image;
 flyTurn();
 assert.equal(state.lane, 0);
 assert.equal(state.reward, 1);
 assert.equal(state.turn, 1);
 assert.equal(state.analysis, null, 'calculate again for the next turn');
-assert.equal((elements.get('actionScores').innerHTML.match(/class="score-line/g) || []).length, 3);
-assert.match(elements.get('actionScores').innerHTML, /—/);
+assert.equal(elements.get('actionScores').innerHTML, previousScores, 'keep previous percentages while calculating');
+assert.deepEqual(elements.get('neuronMap').image, previousMap, 'keep previous neuron map while calculating');
+assert.match(elements.get('modelStatus').textContent, /이전 결과/);
+assert.match(elements.get('neuronInfo').textContent, /이전 결과/);
+flyTurn();
+assert.equal(state.turn, 1, 'never act on the previous calculation');
+const active = new Uint8Array(network.neurons); active[1] = 1;
+fakeWorker.onmessage({ data: { type: 'result', id: state.request, ...sample, probabilities: [0.1, 0.2, 0.7], action: 2, active, activeNeurons: 1, totalSpikes: 1 } });
+assert.match(elements.get('actionScores').innerHTML, /70.0%/);
+assert.equal(elements.get('neuronMap').image[4], 198, 'show the new neuron map after calculation');
+assert.doesNotMatch(elements.get('neuronInfo').textContent, /이전 결과/);
 setMode('manual');
 state.rows = [[true, true, false], [false, false, true]];
 state.done = false; state.turn = 0; state.reward = 0; state.analysis = sample;
