@@ -7,7 +7,7 @@ from model import Network, Parameters, Simulator
 from experiments.game_supervised import game_states
 
 ROOT = Path(__file__).resolve().parents[1]
-COLOR_MAX = 15.0
+COLOR_MAX = 50.0
 
 def main():
     network = Network.load(ROOT / 'results/princeton-network.bin')
@@ -71,10 +71,10 @@ def main():
 
     output = {
         'description': ('35 descending and 15 intermediate neurons ranked by standard deviation '
-                        'of peak threshold excess clipped to the displayed 0–15 color scale '
+                        'of peak threshold excess clipped to the displayed 0–50 color scale '
                         'across all 36 valid game inputs. Visualization sample only; not representative.'),
         'selection': {'inputs': len(states),
-                      'metric': 'population standard deviation of per-input peak threshold excess clipped to 0–15 (display color scale)',
+                      'metric': 'population standard deviation of per-input peak threshold excess clipped to 0–50 (display color scale)',
                       'descending_candidates': len(candidates['descending']),
                       'intermediate_candidates': len(candidates['intermediate'])},
         'descending': [], 'intermediate': [],

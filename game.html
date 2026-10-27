@@ -25,7 +25,7 @@
  <div class="view-heading"><h2>3D 뉴런</h2><div class="view-actions"><select id="viewCount" aria-label="3D에 표시할 뉴런 수"><option value="10">10개</option><option value="20" selected>20개</option><option value="50">50개</option></select><button class="button" id="show3d" disabled>3D 새로고침</button></div></div>
  <div class="view-frame"><div class="view-placeholder" id="viewPlaceholder">계산이 끝나면 3D 발화를 자동으로 불러옵니다.</div><iframe class="brain-view" id="brainView" title="FlyWire 뉴런 3D 뷰어" loading="lazy" allowfullscreen></iframe></div>
  <p class="neuron-info" id="view3dInfo">하강 뉴런 14개 · 중간 뉴런 6개 · FAFB 영상 좌우 반전</p>
- <p class="note">임계값 1을 넘은 최대량: 미발화는 회색, 0은 연두색, 15 이상은 빨간색. 발화 변화가 다양한 뉴런을 고른 예시입니다.</p>
+ <p class="note">임계값 1을 넘은 최대량: 미발화는 회색, 0은 연두색, 50 이상은 빨간색. 발화 변화가 다양한 뉴런을 고른 예시입니다.</p>
  <a id="open3d" style="display:none;color:var(--cyan);font-size:11px" target="_blank" rel="noopener noreferrer">3D 뷰어를 새 탭에서 열기</a>
 </section>
 <aside class="side">
@@ -39,7 +39,7 @@
   <div class="head"><h2>뉴런 발화</h2><span class="hint">7ms 누적</span></div>
   <canvas class="neuron-map" id="neuronMap" width="528" height="264" aria-label="전체 뉴런 발화 표시"></canvas>
   <p class="neuron-info" id="neuronInfo">모델을 불러오는 중입니다.</p>
-  <p class="note">회색: 발화 없음 · 연두색부터 빨간색: 최대 임계 초과량 0부터 15 이상. 위 점의 위치는 실제 뇌 위치가 아닙니다.</p>
+  <p class="note">회색: 발화 없음 · 연두색부터 빨간색: 최대 임계 초과량 0부터 50 이상. 위 점의 위치는 실제 뇌 위치가 아닙니다.</p>
  </section>
 </aside>
 </div>
@@ -48,10 +48,10 @@
 <script>
 const laneNames=['왼쪽','가운데','오른쪽'];
 const state={lane:1,rows:[],turn:0,done:false,auto:false,mode:'fly',timer:null,message:'초파리 플레이를 눌러 시작하세요.',tone:'',ready:false,analysis:null,lastAnalysis:null,lastInput:'',request:0,error:'',neurons:139255,visualNeurons:[],snapshotKey:'',snapshotSize:20};
-const worker=new Worker('web-assets/simulator.js?v=excess-20261027');
+const worker=new Worker('web-assets/simulator.js?v=excess-50-20261027');
 function makeRow(){const count=1+Math.floor(Math.random()*2),blocked=[];while(blocked.length<count){const lane=Math.floor(Math.random()*3);if(!blocked.includes(lane))blocked.push(lane)}return[0,1,2].map(lane=>blocked.includes(lane))}
 function inputVector(){return state.rows.flatMap(row=>row.map(Number))}
-function activityColor(active,excess){if(!active)return 0x6b7472;const t=Math.min(Math.max(excess,0)/15,1);return(Math.round(198+57*t)<<16)|(Math.round(243-136*t)<<8)|Math.round(107-15*t)}
+function activityColor(active,excess){if(!active)return 0x6b7472;const t=Math.min(Math.max(excess,0)/50,1);return(Math.round(198+57*t)<<16)|(Math.round(243-136*t)<<8)|Math.round(107-15*t)}
 function drawNeurons(displayItem){
  const canvas=document.getElementById('neuronMap'),ctx=canvas.getContext('2d'),image=ctx.createImageData(canvas.width,canvas.height);
  for(let i=0;i<state.neurons;i++){const color=activityColor(displayItem?.active[i],displayItem?.peakExcess[i]||0),p=i*4;image.data[p]=color>>16;image.data[p+1]=(color>>8)&255;image.data[p+2]=color&255;image.data[p+3]=255}

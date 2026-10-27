@@ -1,313 +1,313 @@
 {
-  "description": "35 descending and 15 intermediate neurons ranked by standard deviation of peak threshold excess clipped to the displayed 0–15 color scale across all 36 valid game inputs. Visualization sample only; not representative.",
+  "description": "35 descending and 15 intermediate neurons ranked by standard deviation of peak threshold excess clipped to the displayed 0–50 color scale across all 36 valid game inputs. Visualization sample only; not representative.",
   "selection": {
     "inputs": 36,
-    "metric": "population standard deviation of per-input peak threshold excess clipped to 0–15 (display color scale)",
+    "metric": "population standard deviation of per-input peak threshold excess clipped to 0–50 (display color scale)",
     "descending_candidates": 1303,
     "intermediate_candidates": 137892
   },
   "descending": [
     {
-      "root_id": "720575940634253281",
-      "color_excess_sd": 6.948862,
-      "color_excess_span": 13.712193,
-      "max_raw_excess": 23.328053
-    },
-    {
-      "root_id": "720575940622550089",
-      "color_excess_sd": 6.864247,
-      "color_excess_span": 14.3,
-      "max_raw_excess": 48.646957
-    },
-    {
-      "root_id": "720575940620468718",
-      "color_excess_sd": 6.685257,
-      "color_excess_span": 14.8,
-      "max_raw_excess": 40.907326
-    },
-    {
-      "root_id": "720575940632472850",
-      "color_excess_sd": 6.674001,
-      "color_excess_span": 15.0,
-      "max_raw_excess": 23.837807
-    },
-    {
-      "root_id": "720575940622010373",
-      "color_excess_sd": 6.619094,
-      "color_excess_span": 14.8,
-      "max_raw_excess": 39.592684
-    },
-    {
-      "root_id": "720575940628437291",
-      "color_excess_sd": 6.585258,
-      "color_excess_span": 14.8,
-      "max_raw_excess": 98.004887
-    },
-    {
-      "root_id": "720575940626009852",
-      "color_excess_sd": 6.554219,
-      "color_excess_span": 14.975,
-      "max_raw_excess": 37.600615
-    },
-    {
-      "root_id": "720575940620054694",
-      "color_excess_sd": 6.512945,
-      "color_excess_span": 14.95,
-      "max_raw_excess": 33.927449
-    },
-    {
-      "root_id": "720575940623781127",
-      "color_excess_sd": 6.511003,
-      "color_excess_span": 14.9,
-      "max_raw_excess": 68.895738
-    },
-    {
-      "root_id": "720575940620298772",
-      "color_excess_sd": 6.48068,
-      "color_excess_span": 12.9,
-      "max_raw_excess": 21.625
-    },
-    {
       "root_id": "720575940622673860",
-      "color_excess_sd": 6.466437,
-      "color_excess_span": 14.35,
+      "color_excess_sd": 21.117392,
+      "color_excess_span": 49.35,
       "max_raw_excess": 112.145738
     },
     {
-      "root_id": "720575940627946261",
-      "color_excess_sd": 6.457994,
-      "color_excess_span": 14.6,
-      "max_raw_excess": 44.41708
+      "root_id": "720575940628437291",
+      "color_excess_sd": 20.191371,
+      "color_excess_span": 49.8,
+      "max_raw_excess": 98.004887
     },
     {
-      "root_id": "720575940623468691",
-      "color_excess_sd": 6.374259,
-      "color_excess_span": 14.525,
-      "max_raw_excess": 31.90915
+      "root_id": "720575940623781127",
+      "color_excess_sd": 19.929386,
+      "color_excess_span": 49.9,
+      "max_raw_excess": 68.895738
     },
     {
-      "root_id": "720575940618314897",
-      "color_excess_sd": 6.297963,
-      "color_excess_span": 13.857316,
-      "max_raw_excess": 34.854273
-    },
-    {
-      "root_id": "720575940626982181",
-      "color_excess_sd": 6.167774,
-      "color_excess_span": 14.875,
-      "max_raw_excess": 15.392684
-    },
-    {
-      "root_id": "720575940612203482",
-      "color_excess_sd": 6.152373,
-      "color_excess_span": 14.7,
-      "max_raw_excess": 24.846957
-    },
-    {
-      "root_id": "720575940632868051",
-      "color_excess_sd": 6.144383,
-      "color_excess_span": 14.4,
-      "max_raw_excess": 57.477449
-    },
-    {
-      "root_id": "720575940620038779",
-      "color_excess_sd": 6.054416,
-      "color_excess_span": 14.925,
-      "max_raw_excess": 17.999395
-    },
-    {
-      "root_id": "720575940620153765",
-      "color_excess_sd": 6.050661,
-      "color_excess_span": 14.35,
-      "max_raw_excess": 33.75
-    },
-    {
-      "root_id": "720575940625558730",
-      "color_excess_sd": 5.992937,
-      "color_excess_span": 14.70915,
-      "max_raw_excess": 14.93415
-    },
-    {
-      "root_id": "720575940641148149",
-      "color_excess_sd": 5.987884,
-      "color_excess_span": 13.9,
-      "max_raw_excess": 22.375
-    },
-    {
-      "root_id": "720575940613917359",
-      "color_excess_sd": 5.943529,
-      "color_excess_span": 14.925,
-      "max_raw_excess": 20.815246
-    },
-    {
-      "root_id": "720575940611813842",
-      "color_excess_sd": 5.922129,
-      "color_excess_span": 12.725,
-      "max_raw_excess": 31.443904
-    },
-    {
-      "root_id": "720575940636454136",
-      "color_excess_sd": 5.884359,
-      "color_excess_span": 14.275,
-      "max_raw_excess": 21.425
-    },
-    {
-      "root_id": "720575940625878160",
-      "color_excess_sd": 5.791879,
-      "color_excess_span": 13.475,
-      "max_raw_excess": 24.536588
-    },
-    {
-      "root_id": "720575940619432261",
-      "color_excess_sd": 5.756046,
-      "color_excess_span": 14.475,
-      "max_raw_excess": 56.859764
-    },
-    {
-      "root_id": "720575940626806046",
-      "color_excess_sd": 5.752462,
-      "color_excess_span": 14.925,
-      "max_raw_excess": 18.353668
-    },
-    {
-      "root_id": "720575940627645514",
-      "color_excess_sd": 5.74104,
-      "color_excess_span": 14.8,
-      "max_raw_excess": 79.679887
-    },
-    {
-      "root_id": "720575940647586948",
-      "color_excess_sd": 5.738314,
-      "color_excess_span": 12.6,
-      "max_raw_excess": 24.325
-    },
-    {
-      "root_id": "720575940646814340",
-      "color_excess_sd": 5.715318,
-      "color_excess_span": 14.7,
-      "max_raw_excess": 19.975
-    },
-    {
-      "root_id": "720575940616826380",
-      "color_excess_sd": 5.656205,
-      "color_excess_span": 14.025,
-      "max_raw_excess": 21.175
-    },
-    {
-      "root_id": "720575940622204186",
-      "color_excess_sd": 5.655267,
-      "color_excess_span": 13.175,
-      "max_raw_excess": 26.6
-    },
-    {
-      "root_id": "720575940628132745",
-      "color_excess_sd": 5.652962,
-      "color_excess_span": 14.95,
-      "max_raw_excess": 18.725
+      "root_id": "720575940632499757",
+      "color_excess_sd": 19.596558,
+      "color_excess_span": 48.675,
+      "max_raw_excess": 73.262203
     },
     {
       "root_id": "720575940610505006",
-      "color_excess_sd": 5.617075,
-      "color_excess_span": 14.65,
+      "color_excess_sd": 19.437941,
+      "color_excess_span": 49.65,
       "max_raw_excess": 174.15
     },
     {
-      "root_id": "720575940629155227",
-      "color_excess_sd": 5.589929,
-      "color_excess_span": 12.95,
-      "max_raw_excess": 23.025
+      "root_id": "720575940627652358",
+      "color_excess_sd": 19.341418,
+      "color_excess_span": 44.832316,
+      "max_raw_excess": 61.470738
+    },
+    {
+      "root_id": "720575940629757036",
+      "color_excess_sd": 18.326583,
+      "color_excess_span": 49.7,
+      "max_raw_excess": 91.740246
+    },
+    {
+      "root_id": "720575940622838154",
+      "color_excess_sd": 18.15102,
+      "color_excess_span": 49.4,
+      "max_raw_excess": 69.825
+    },
+    {
+      "root_id": "720575940632868051",
+      "color_excess_sd": 18.108783,
+      "color_excess_span": 49.4,
+      "max_raw_excess": 57.477449
+    },
+    {
+      "root_id": "720575940622996579",
+      "color_excess_sd": 16.603024,
+      "color_excess_span": 44.3,
+      "max_raw_excess": 63.153053
+    },
+    {
+      "root_id": "720575940627645514",
+      "color_excess_sd": 16.520899,
+      "color_excess_span": 49.8,
+      "max_raw_excess": 79.679887
+    },
+    {
+      "root_id": "720575940624349993",
+      "color_excess_sd": 16.517043,
+      "color_excess_span": 49.7,
+      "max_raw_excess": 61.940861
+    },
+    {
+      "root_id": "720575940604954289",
+      "color_excess_sd": 16.468127,
+      "color_excess_span": 49.075,
+      "max_raw_excess": 83.7
+    },
+    {
+      "root_id": "720575940628352850",
+      "color_excess_sd": 16.390292,
+      "color_excess_span": 47.95,
+      "max_raw_excess": 67.463422
+    },
+    {
+      "root_id": "720575940627946261",
+      "color_excess_sd": 16.321475,
+      "color_excess_span": 44.01708,
+      "max_raw_excess": 44.41708
+    },
+    {
+      "root_id": "720575940619432261",
+      "color_excess_sd": 16.235123,
+      "color_excess_span": 49.475,
+      "max_raw_excess": 56.859764
+    },
+    {
+      "root_id": "720575940629461442",
+      "color_excess_sd": 15.913871,
+      "color_excess_span": 48.9,
+      "max_raw_excess": 63.0
+    },
+    {
+      "root_id": "720575940626730883",
+      "color_excess_sd": 15.755727,
+      "color_excess_span": 44.45,
+      "max_raw_excess": 52.75
+    },
+    {
+      "root_id": "720575940622550089",
+      "color_excess_sd": 15.547395,
+      "color_excess_span": 47.946957,
+      "max_raw_excess": 48.646957
+    },
+    {
+      "root_id": "720575940627732361",
+      "color_excess_sd": 15.346222,
+      "color_excess_span": 45.983545,
+      "max_raw_excess": 46.033545
+    },
+    {
+      "root_id": "720575940611644529",
+      "color_excess_sd": 15.21901,
+      "color_excess_span": 49.575,
+      "max_raw_excess": 111.377449
+    },
+    {
+      "root_id": "720575940620468718",
+      "color_excess_sd": 15.125081,
+      "color_excess_span": 40.707326,
+      "max_raw_excess": 40.907326
+    },
+    {
+      "root_id": "720575940627139530",
+      "color_excess_sd": 14.302173,
+      "color_excess_span": 44.955492,
+      "max_raw_excess": 47.755492
+    },
+    {
+      "root_id": "720575940641173632",
+      "color_excess_sd": 13.821725,
+      "color_excess_span": 45.184764,
+      "max_raw_excess": 45.909764
+    },
+    {
+      "root_id": "720575940640978048",
+      "color_excess_sd": 13.702257,
+      "color_excess_span": 39.125,
+      "max_raw_excess": 39.95
+    },
+    {
+      "root_id": "720575940630758418",
+      "color_excess_sd": 13.417416,
+      "color_excess_span": 43.975,
+      "max_raw_excess": 46.175
+    },
+    {
+      "root_id": "720575940620918789",
+      "color_excess_sd": 13.271743,
+      "color_excess_span": 37.625,
+      "max_raw_excess": 39.975
+    },
+    {
+      "root_id": "720575940612603289",
+      "color_excess_sd": 13.085911,
+      "color_excess_span": 40.5,
+      "max_raw_excess": 47.025
+    },
+    {
+      "root_id": "720575940635872101",
+      "color_excess_sd": 12.810027,
+      "color_excess_span": 41.917684,
+      "max_raw_excess": 43.417684
+    },
+    {
+      "root_id": "720575940641278965",
+      "color_excess_sd": 12.695784,
+      "color_excess_span": 37.049395,
+      "max_raw_excess": 37.174395
+    },
+    {
+      "root_id": "720575940632189900",
+      "color_excess_sd": 12.685451,
+      "color_excess_span": 41.88293,
+      "max_raw_excess": 42.15793
+    },
+    {
+      "root_id": "720575940651341558",
+      "color_excess_sd": 12.602356,
+      "color_excess_span": 41.8,
+      "max_raw_excess": 42.375
+    },
+    {
+      "root_id": "720575940640325429",
+      "color_excess_sd": 12.383221,
+      "color_excess_span": 44.38415,
+      "max_raw_excess": 45.18415
+    },
+    {
+      "root_id": "720575940620380449",
+      "color_excess_sd": 12.370835,
+      "color_excess_span": 37.2,
+      "max_raw_excess": 66.148176
+    },
+    {
+      "root_id": "720575940647228468",
+      "color_excess_sd": 12.336643,
+      "color_excess_span": 35.875,
+      "max_raw_excess": 38.1
     }
   ],
   "intermediate": [
     {
-      "root_id": "720575940628454202",
-      "color_excess_sd": 7.45356,
-      "color_excess_span": 0.0,
-      "max_raw_excess": 18.725
+      "root_id": "720575940634555488",
+      "color_excess_sd": 24.062945,
+      "color_excess_span": 49.725,
+      "max_raw_excess": 69.355492
     },
     {
-      "root_id": "720575940627255582",
-      "color_excess_sd": 7.407054,
-      "color_excess_span": 14.2,
-      "max_raw_excess": 19.233301
+      "root_id": "720575940618554041",
+      "color_excess_sd": 23.500382,
+      "color_excess_span": 49.363412,
+      "max_raw_excess": 52.014504
     },
     {
-      "root_id": "720575940659460737",
-      "color_excess_sd": 7.312539,
-      "color_excess_span": 14.934754,
-      "max_raw_excess": 18.275
+      "root_id": "720575940628438427",
+      "color_excess_sd": 23.33283,
+      "color_excess_span": 49.95,
+      "max_raw_excess": 51.275
     },
     {
-      "root_id": "720575940616455622",
-      "color_excess_sd": 7.3125,
-      "color_excess_span": 14.625,
-      "max_raw_excess": 33.05
+      "root_id": "720575940626039996",
+      "color_excess_sd": 22.984581,
+      "color_excess_span": 49.939631,
+      "max_raw_excess": 90.2
     },
     {
-      "root_id": "720575940615855254",
-      "color_excess_sd": 7.3125,
-      "color_excess_span": 14.625,
-      "max_raw_excess": 26.125
+      "root_id": "720575940615139503",
+      "color_excess_sd": 22.777334,
+      "color_excess_span": 48.441455,
+      "max_raw_excess": 75.775
     },
     {
-      "root_id": "720575940624972523",
-      "color_excess_sd": 7.307929,
-      "color_excess_span": 15.0,
-      "max_raw_excess": 30.307326
+      "root_id": "720575940651694326",
+      "color_excess_sd": 22.726779,
+      "color_excess_span": 49.975,
+      "max_raw_excess": 57.45
     },
     {
-      "root_id": "720575940624527251",
-      "color_excess_sd": 7.264652,
-      "color_excess_span": 14.9,
-      "max_raw_excess": 19.525
+      "root_id": "720575940642724119",
+      "color_excess_sd": 22.702314,
+      "color_excess_span": 49.725,
+      "max_raw_excess": 63.375
     },
     {
-      "root_id": "720575940615688404",
-      "color_excess_sd": 7.249948,
-      "color_excess_span": 14.725,
-      "max_raw_excess": 26.302449
+      "root_id": "720575940633893401",
+      "color_excess_sd": 22.584602,
+      "color_excess_span": 49.875,
+      "max_raw_excess": 104.594518
     },
     {
-      "root_id": "720575940658655873",
-      "color_excess_sd": 7.242682,
-      "color_excess_span": 14.825,
-      "max_raw_excess": 24.327449
+      "root_id": "720575940633893971",
+      "color_excess_sd": 22.305506,
+      "color_excess_span": 45.5,
+      "max_raw_excess": 55.0
     },
     {
-      "root_id": "720575940636422121",
-      "color_excess_sd": 7.232809,
-      "color_excess_span": 14.975,
-      "max_raw_excess": 15.875
+      "root_id": "720575940623216311",
+      "color_excess_sd": 22.040108,
+      "color_excess_span": 49.8,
+      "max_raw_excess": 58.115861
     },
     {
-      "root_id": "720575940627351913",
-      "color_excess_sd": 7.2268,
-      "color_excess_span": 14.975,
-      "max_raw_excess": 17.75
+      "root_id": "720575940610983492",
+      "color_excess_sd": 22.024018,
+      "color_excess_span": 46.143894,
+      "max_raw_excess": 52.325
     },
     {
-      "root_id": "720575940638126448",
-      "color_excess_sd": 7.217358,
-      "color_excess_span": 14.807316,
-      "max_raw_excess": 16.248166
+      "root_id": "720575940618330041",
+      "color_excess_sd": 21.917695,
+      "color_excess_span": 49.15,
+      "max_raw_excess": 63.137807
     },
     {
-      "root_id": "720575940615528678",
-      "color_excess_sd": 7.19818,
-      "color_excess_span": 14.9,
-      "max_raw_excess": 44.725615
+      "root_id": "720575940625444075",
+      "color_excess_sd": 21.904475,
+      "color_excess_span": 45.25,
+      "max_raw_excess": 57.35
     },
     {
-      "root_id": "720575940611169394",
-      "color_excess_sd": 7.187028,
-      "color_excess_span": 14.993289,
-      "max_raw_excess": 17.458832
+      "root_id": "720575940627796298",
+      "color_excess_sd": 21.814489,
+      "color_excess_span": 50.0,
+      "max_raw_excess": 131.011588
     },
     {
-      "root_id": "720575940631441145",
-      "color_excess_sd": 7.179508,
-      "color_excess_span": 14.75,
-      "max_raw_excess": 18.7
+      "root_id": "720575940610584184",
+      "color_excess_sd": 21.787469,
+      "color_excess_span": 49.075,
+      "max_raw_excess": 161.355492
     }
   ]
 }

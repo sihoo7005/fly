@@ -57,9 +57,10 @@ vm.runInNewContext(`${script}\nglobalThis.game = { state, inputVector, act, make
 const { state, act, makeRow, flyTurn, setMode, startGame, show3D, activityColor, visibleNeurons } = context.game;
 assert.equal(activityColor(false, 0), 0x6b7472);
 assert.equal(activityColor(true, 0), 0xc6f36b);
-assert.equal(activityColor(true, 7.5), 0xe3af64);
-assert.equal(activityColor(true, 15), 0xff6b5c);
-assert.equal(activityColor(true, 30), 0xff6b5c);
+assert.equal(activityColor(true, 7.5), 0xcfdf69);
+assert.equal(activityColor(true, 15), 0xd8cb67);
+assert.equal(activityColor(true, 30), 0xea9863);
+assert.equal(activityColor(true, 50), 0xff6b5c);
 assert.equal((elements.get('actionScores').innerHTML.match(/class="score-line/g) || []).length, 3);
 assert.match(elements.get('actionScores').innerHTML, /—/);
 for (let i = 0; i < 1000; i++) { const count = makeRow().filter(Boolean).length; assert.ok(count >= 1 && count <= 2); }
