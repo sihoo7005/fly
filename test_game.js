@@ -24,6 +24,8 @@ for (let i = 1; i < features.length; i++) {
 assert.equal(features.length, 37);
 
 const html = fs.readFileSync('game.html', 'utf8');
+assert.ok(html.indexOf('<section class="card game-card"') < html.indexOf('<section class="card viewer-card"'));
+assert.ok(html.indexOf('<section class="card viewer-card"') < html.indexOf('<aside class="side">'));
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 const elements = new Map();
 const buttons = [0, 1, 2].map(lane => ({ dataset: { lane: String(lane) }, addEventListener() {}, disabled: false }));
@@ -58,6 +60,7 @@ state.rows = [[false, false, true], [false, false, true]];
 fakeWorker.onmessage({ data: { type: 'result', id: state.request, ...sample } });
 show3D();
 assert.equal(elements.get('open3d').href, elements.get('brainView').src);
+assert.equal(elements.get('viewPlaceholder').style.display, 'none');
 const scene = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
 assert.equal(scene.layers[1].source, 'precomputed://gs://flywire_v141_m783');
 for (const neuron of visualNeurons) {
