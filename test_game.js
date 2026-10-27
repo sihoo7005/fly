@@ -44,7 +44,7 @@ const elements = new Map();
 const buttons = [0, 1, 2].map(lane => ({ dataset: { lane: String(lane) }, addEventListener() {}, disabled: false }));
 const document = {
   getElementById(id) {
-    if (!elements.has(id)) elements.set(id, { addEventListener() {}, classList: { toggle() {} }, style: {}, width: 528, height: 264,
+    if (!elements.has(id)) elements.set(id, { handlers: {}, addEventListener(type, fn) { this.handlers[type] = fn; }, value: id === 'viewCount' ? '20' : undefined, classList: { toggle() {} }, style: {}, width: 528, height: 264,
       getContext() { return { createImageData(w, h) { return { data: new Uint8ClampedArray(w * h * 4) }; }, putImageData(image) { elements.get('neuronMap').image = image.data; } }; } });
     return elements.get(id);
   },
@@ -53,8 +53,8 @@ const document = {
 };
 class FakeWorker { constructor() { globalThis.fakeWorker = this; this.messages = []; } postMessage(msg) { this.messages.push(msg); } }
 const context = { document, Math, Object, Uint8ClampedArray, Worker: FakeWorker, setTimeout, clearTimeout };
-vm.runInNewContext(`${script}\nglobalThis.game = { state, inputVector, act, makeRow, flyTurn, setMode, startGame, show3D, activityColor };`, context);
-const { state, act, makeRow, flyTurn, setMode, startGame, show3D, activityColor } = context.game;
+vm.runInNewContext(`${script}\nglobalThis.game = { state, inputVector, act, makeRow, flyTurn, setMode, startGame, show3D, activityColor, visibleNeurons };`, context);
+const { state, act, makeRow, flyTurn, setMode, startGame, show3D, activityColor, visibleNeurons } = context.game;
 assert.equal(activityColor(false, 0), 0x6b7472);
 assert.equal(activityColor(true, 0), 0xc6f36b);
 assert.equal(activityColor(true, 7.5), 0xe3af64);
@@ -81,10 +81,21 @@ assert.equal(elements.get('open3d').href, elements.get('brainView').src);
 assert.equal(elements.get('viewPlaceholder').style.display, 'none');
 const scene = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
 assert.equal(scene.layers[1].source, 'precomputed://gs://flywire_v141_m783');
-for (const neuron of visualNeurons) {
+assert.equal(scene.layers[1].segments.length, 20);
+assert.equal(visibleNeurons().filter(n => outputNodes.has(n.node)).length, 14);
+for (const neuron of visibleNeurons()) {
   assert.equal(scene.layers[1].segmentColors[neuron.id], '#'+activityColor(sample.active[neuron.node], sample.peakExcess[neuron.node]).toString(16).padStart(6,'0'));
 }
 assert.equal(state.snapshotKey, '001001');
+const viewCount = elements.get('viewCount');
+viewCount.value = '10'; viewCount.handlers.change();
+let scene10 = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
+assert.equal(scene10.layers[1].segments.length, 10);
+assert.equal(visibleNeurons().filter(n => outputNodes.has(n.node)).length, 7);
+viewCount.value = '50'; viewCount.handlers.change();
+let scene50 = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
+assert.equal(scene50.layers[1].segments.length, 50);
+viewCount.value = '20'; viewCount.handlers.change();
 const previousMap = elements.get('neuronMap').image;
 const previousView = elements.get('brainView').src;
 flyTurn();
@@ -106,7 +117,7 @@ assert.match(elements.get('actionScores').innerHTML, /70.0%/);
 assert.notEqual(elements.get('brainView').src, previousView, 'refresh 3D after calculation');
 assert.equal(state.snapshotKey, state.rows.flatMap(row => row.map(Number)).join(''));
 const nextScene = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
-for (const neuron of visualNeurons) assert.equal(nextScene.layers[1].segmentColors[neuron.id], '#'+activityColor(active[neuron.node], peakExcess[neuron.node]).toString(16).padStart(6,'0'));
+for (const neuron of visibleNeurons()) assert.equal(nextScene.layers[1].segmentColors[neuron.id], '#'+activityColor(active[neuron.node], peakExcess[neuron.node]).toString(16).padStart(6,'0'));
 assert.equal(nextScene.layers[1].segmentColors[visualNeurons[0].id], '#ff6b5c', 'large threshold excess is red');
 assert.equal(elements.get('neuronMap').image[4], 198, 'show the new neuron map after calculation');
 assert.doesNotMatch(elements.get('neuronInfo').textContent, /이전 결과/);
