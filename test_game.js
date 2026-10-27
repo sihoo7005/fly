@@ -9,11 +9,11 @@ const model = JSON.parse(fs.readFileSync('web-assets/model.json', 'utf8'));
 const features = fs.readFileSync('test_data/game-supervised-features.csv', 'utf8').trim().split(/\r?\n/);
 const predictions = fs.readFileSync('test_data/game-supervised-predictions.csv', 'utf8').trim().split(/\r?\n/);
 assert.deepEqual(features[0].split(',').slice(1), model.outputIds);
-assert.equal(model.visualNeurons.length, 100);
-assert.equal(new Set(model.visualNeurons.map(n => n.id)).size, 100);
+assert.equal(model.visualNeurons.length, 50);
+assert.equal(new Set(model.visualNeurons.map(n => n.id)).size, 50);
 const outputNodes = new Set(model.outputIndices), inputNodes = new Set(model.inputGroups.flat());
-assert.equal(model.visualNeurons.filter(n => outputNodes.has(n.node)).length, 70);
-assert.equal(model.visualNeurons.filter(n => !outputNodes.has(n.node) && !inputNodes.has(n.node)).length, 30);
+assert.equal(model.visualNeurons.filter(n => outputNodes.has(n.node)).length, 35);
+assert.equal(model.visualNeurons.filter(n => !outputNodes.has(n.node) && !inputNodes.has(n.node)).length, 15);
 let sample;
 for (let i = 1; i < features.length; i++) {
   const [input, ...counts] = features[i].split(',');

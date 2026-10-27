@@ -62,7 +62,7 @@ function simulate(network, model, bits) {
 if (typeof module !== 'undefined') module.exports = { loadNetwork, simulate };
 if (typeof self !== 'undefined' && typeof self.postMessage === 'function') {
   let network, model;
-  Promise.all([fetch('network.bin'), fetch('model.json?v=sample100')])
+  Promise.all([fetch('network.bin'), fetch('model.json?v=sample50')])
     .then(async responses => {
       if (responses.some(response => !response.ok)) throw new Error('모델 파일을 불러오지 못했습니다.');
       network = loadNetwork(await responses[0].arrayBuffer()); model = await responses[1].json();

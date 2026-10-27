@@ -1,16 +1,10 @@
 {
-  "description": "Seventy descending and thirty non-input, non-readout neurons selected for varied firing across the 36 game inputs; this is a visualization sample, not a representative sample.",
+  "description": "Thirty-five descending and fifteen non-input, non-readout neurons selected for varied firing across the 36 game inputs; this is a visualization sample, not a representative sample.",
   "descending": [
     {
       "root_id": "720575940603591014",
       "zero_states": 6,
       "one_spike_states": 30,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940605714878",
-      "zero_states": 7,
-      "one_spike_states": 29,
       "multiple_spike_states": 0
     },
     {
@@ -20,21 +14,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940607854793",
-      "zero_states": 30,
-      "one_spike_states": 6,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940609097429",
       "zero_states": 2,
       "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940610010521",
-      "zero_states": 3,
-      "one_spike_states": 33,
       "multiple_spike_states": 0
     },
     {
@@ -44,21 +26,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940611981029",
-      "zero_states": 2,
-      "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940612629210",
       "zero_states": 1,
       "one_spike_states": 35,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940613307033",
-      "zero_states": 26,
-      "one_spike_states": 10,
       "multiple_spike_states": 0
     },
     {
@@ -68,21 +38,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940614137907",
-      "zero_states": 8,
-      "one_spike_states": 28,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940614403178",
       "zero_states": 2,
       "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940615043222",
-      "zero_states": 1,
-      "one_spike_states": 35,
       "multiple_spike_states": 0
     },
     {
@@ -92,21 +50,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940616604817",
-      "zero_states": 2,
-      "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940617296029",
       "zero_states": 8,
       "one_spike_states": 28,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940617917396",
-      "zero_states": 5,
-      "one_spike_states": 31,
       "multiple_spike_states": 0
     },
     {
@@ -116,21 +62,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940618827910",
-      "zero_states": 31,
-      "one_spike_states": 5,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940619548799",
       "zero_states": 17,
       "one_spike_states": 19,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940620300308",
-      "zero_states": 1,
-      "one_spike_states": 35,
       "multiple_spike_states": 0
     },
     {
@@ -140,21 +74,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940620859630",
-      "zero_states": 10,
-      "one_spike_states": 26,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940621246068",
       "zero_states": 11,
       "one_spike_states": 25,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940621399174",
-      "zero_states": 21,
-      "one_spike_states": 15,
       "multiple_spike_states": 0
     },
     {
@@ -164,31 +86,13 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940622248453",
-      "zero_states": 35,
-      "one_spike_states": 1,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940622565590",
       "zero_states": 11,
       "one_spike_states": 25,
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940623037720",
-      "zero_states": 33,
-      "one_spike_states": 3,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940623338281",
-      "zero_states": 10,
-      "one_spike_states": 26,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940623556755",
       "zero_states": 10,
       "one_spike_states": 26,
       "multiple_spike_states": 0
@@ -200,19 +104,7 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940624816115",
-      "zero_states": 2,
-      "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940624986919",
-      "zero_states": 1,
-      "one_spike_states": 35,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940625295339",
       "zero_states": 1,
       "one_spike_states": 35,
       "multiple_spike_states": 0
@@ -224,21 +116,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940625870640",
-      "zero_states": 11,
-      "one_spike_states": 25,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940626319235",
       "zero_states": 11,
       "one_spike_states": 25,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940626877639",
-      "zero_states": 34,
-      "one_spike_states": 2,
       "multiple_spike_states": 0
     },
     {
@@ -248,21 +128,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940627538434",
-      "zero_states": 2,
-      "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940627825923",
       "zero_states": 11,
       "one_spike_states": 25,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940628398202",
-      "zero_states": 15,
-      "one_spike_states": 21,
       "multiple_spike_states": 0
     },
     {
@@ -272,21 +140,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940629041879",
-      "zero_states": 1,
-      "one_spike_states": 35,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940629428215",
       "zero_states": 12,
       "one_spike_states": 24,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940629812346",
-      "zero_states": 31,
-      "one_spike_states": 5,
       "multiple_spike_states": 0
     },
     {
@@ -296,21 +152,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940630607738",
-      "zero_states": 1,
-      "one_spike_states": 35,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940630990533",
       "zero_states": 27,
       "one_spike_states": 9,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940631483695",
-      "zero_states": 3,
-      "one_spike_states": 33,
       "multiple_spike_states": 0
     },
     {
@@ -320,21 +164,9 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940632178892",
-      "zero_states": 11,
-      "one_spike_states": 25,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940632903737",
       "zero_states": 26,
       "one_spike_states": 10,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940633213132",
-      "zero_states": 18,
-      "one_spike_states": 18,
       "multiple_spike_states": 0
     },
     {
@@ -344,31 +176,13 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940634617952",
-      "zero_states": 33,
-      "one_spike_states": 3,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940635587064",
       "zero_states": 31,
       "one_spike_states": 5,
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940636610671",
-      "zero_states": 1,
-      "one_spike_states": 35,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940637308605",
-      "zero_states": 2,
-      "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940638013274",
       "zero_states": 2,
       "one_spike_states": 34,
       "multiple_spike_states": 0
@@ -380,39 +194,15 @@
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940640316238",
-      "zero_states": 35,
-      "one_spike_states": 1,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940641480949",
       "zero_states": 2,
       "one_spike_states": 34,
       "multiple_spike_states": 0
     },
     {
-      "root_id": "720575940643817888",
-      "zero_states": 26,
-      "one_spike_states": 10,
-      "multiple_spike_states": 0
-    },
-    {
       "root_id": "720575940645047831",
       "zero_states": 2,
       "one_spike_states": 34,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940647029044",
-      "zero_states": 1,
-      "one_spike_states": 35,
-      "multiple_spike_states": 0
-    },
-    {
-      "root_id": "720575940656144289",
-      "zero_states": 11,
-      "one_spike_states": 25,
       "multiple_spike_states": 0
     },
     {
@@ -430,19 +220,7 @@
       "multiple_spike_states": 18
     },
     {
-      "root_id": "720575940607389788",
-      "zero_states": 9,
-      "one_spike_states": 9,
-      "multiple_spike_states": 18
-    },
-    {
       "root_id": "720575940610349892",
-      "zero_states": 5,
-      "one_spike_states": 26,
-      "multiple_spike_states": 5
-    },
-    {
-      "root_id": "720575940612219761",
       "zero_states": 5,
       "one_spike_states": 26,
       "multiple_spike_states": 5
@@ -454,21 +232,9 @@
       "multiple_spike_states": 14
     },
     {
-      "root_id": "720575940615549250",
-      "zero_states": 11,
-      "one_spike_states": 19,
-      "multiple_spike_states": 6
-    },
-    {
       "root_id": "720575940616782365",
       "zero_states": 5,
       "one_spike_states": 22,
-      "multiple_spike_states": 9
-    },
-    {
-      "root_id": "720575940617987362",
-      "zero_states": 6,
-      "one_spike_states": 21,
       "multiple_spike_states": 9
     },
     {
@@ -478,33 +244,15 @@
       "multiple_spike_states": 18
     },
     {
-      "root_id": "720575940620614534",
-      "zero_states": 13,
-      "one_spike_states": 10,
-      "multiple_spike_states": 13
-    },
-    {
       "root_id": "720575940621402689",
       "zero_states": 7,
       "one_spike_states": 20,
       "multiple_spike_states": 9
     },
     {
-      "root_id": "720575940622209206",
-      "zero_states": 5,
-      "one_spike_states": 11,
-      "multiple_spike_states": 20
-    },
-    {
       "root_id": "720575940623166413",
       "zero_states": 6,
       "one_spike_states": 21,
-      "multiple_spike_states": 9
-    },
-    {
-      "root_id": "720575940623914509",
-      "zero_states": 7,
-      "one_spike_states": 20,
       "multiple_spike_states": 9
     },
     {
@@ -514,22 +262,10 @@
       "multiple_spike_states": 18
     },
     {
-      "root_id": "720575940625591885",
-      "zero_states": 5,
-      "one_spike_states": 18,
-      "multiple_spike_states": 13
-    },
-    {
       "root_id": "720575940626647939",
       "zero_states": 7,
       "one_spike_states": 20,
       "multiple_spike_states": 9
-    },
-    {
-      "root_id": "720575940627379210",
-      "zero_states": 9,
-      "one_spike_states": 9,
-      "multiple_spike_states": 18
     },
     {
       "root_id": "720575940628091908",
@@ -538,33 +274,15 @@
       "multiple_spike_states": 5
     },
     {
-      "root_id": "720575940629095171",
-      "zero_states": 16,
-      "one_spike_states": 14,
-      "multiple_spike_states": 6
-    },
-    {
       "root_id": "720575940629949263",
       "zero_states": 6,
       "one_spike_states": 21,
       "multiple_spike_states": 9
     },
     {
-      "root_id": "720575940631006976",
-      "zero_states": 5,
-      "one_spike_states": 13,
-      "multiple_spike_states": 18
-    },
-    {
       "root_id": "720575940632234157",
       "zero_states": 15,
       "one_spike_states": 15,
-      "multiple_spike_states": 6
-    },
-    {
-      "root_id": "720575940633160019",
-      "zero_states": 5,
-      "one_spike_states": 25,
       "multiple_spike_states": 6
     },
     {
@@ -574,28 +292,10 @@
       "multiple_spike_states": 12
     },
     {
-      "root_id": "720575940636757902",
-      "zero_states": 16,
-      "one_spike_states": 14,
-      "multiple_spike_states": 6
-    },
-    {
       "root_id": "720575940638592317",
       "zero_states": 6,
       "one_spike_states": 21,
       "multiple_spike_states": 9
-    },
-    {
-      "root_id": "720575940641615579",
-      "zero_states": 9,
-      "one_spike_states": 18,
-      "multiple_spike_states": 9
-    },
-    {
-      "root_id": "720575940646228788",
-      "zero_states": 7,
-      "one_spike_states": 22,
-      "multiple_spike_states": 7
     },
     {
       "root_id": "720575940660155265",
