@@ -29,7 +29,7 @@ const elements = new Map();
 const buttons = [0, 1, 2].map(lane => ({ dataset: { lane: String(lane) }, addEventListener() {}, disabled: false }));
 const document = {
   getElementById(id) {
-    if (!elements.has(id)) elements.set(id, { addEventListener() {}, classList: { toggle() {} }, width: 528, height: 264,
+    if (!elements.has(id)) elements.set(id, { addEventListener() {}, classList: { toggle() {} }, style: {}, width: 528, height: 264,
       getContext() { return { createImageData(w, h) { return { data: new Uint8ClampedArray(w * h * 4) }; }, putImageData() {} }; } });
     return elements.get(id);
   },
@@ -38,10 +38,11 @@ const document = {
 };
 class FakeWorker { constructor() { globalThis.fakeWorker = this; this.messages = []; } postMessage(msg) { this.messages.push(msg); } }
 const context = { document, Math, Object, Uint8ClampedArray, Worker: FakeWorker, setTimeout, clearTimeout };
-vm.runInNewContext(`${script}\nglobalThis.game = { state, inputVector, act, makeRow, flyTurn, setMode, startGame };`, context);
-const { state, act, makeRow, flyTurn, setMode, startGame } = context.game;
+vm.runInNewContext(`${script}\nglobalThis.game = { state, inputVector, act, makeRow, flyTurn, setMode, startGame, show3D };`, context);
+const { state, act, makeRow, flyTurn, setMode, startGame, show3D } = context.game;
 for (let i = 0; i < 1000; i++) { const count = makeRow().filter(Boolean).length; assert.ok(count >= 1 && count <= 2); }
-fakeWorker.onmessage({ data: { type: 'ready', neurons: network.neurons } });
+const visualNeurons = [{ node: model.inputGroups[2][0], id: model.inputIds[2][0] }, { node: model.outputIndices[0], id: model.outputIds[0] }];
+fakeWorker.onmessage({ data: { type: 'ready', neurons: network.neurons, visualNeurons } });
 state.rows = [[false, false, true], [false, false, true]];
 state.done = false; state.auto = false; state.turn = 0; state.reward = 0;
 state.analysis = null;
@@ -53,6 +54,14 @@ fakeWorker.onmessage({ data: { type: 'result', id: stale, ...sample } });
 assert.equal(state.analysis, null, 'discard results from a previous game');
 state.rows = [[false, false, true], [false, false, true]];
 fakeWorker.onmessage({ data: { type: 'result', id: state.request, ...sample } });
+show3D();
+assert.equal(elements.get('open3d').href, elements.get('brainView').src);
+const scene = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
+assert.equal(scene.layers[1].source, 'precomputed://gs://flywire_v141_m783');
+for (const neuron of visualNeurons) {
+  assert.equal(scene.layers[1].segmentColors[neuron.id], sample.active[neuron.node] ? '#c6f36b' : '#6b7472');
+}
+assert.equal(state.snapshotKey, '001001');
 flyTurn();
 assert.equal(state.lane, 0);
 assert.equal(state.reward, 1);

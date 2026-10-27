@@ -19,6 +19,8 @@ def main():
     model = {
         'inputGroups': [[network.index[root] for root in groups['groups'][name]['root_ids']]
                         for name in groups['signal_order']],
+        'inputIds': [[str(root) for root in groups['groups'][name]['root_ids']]
+                     for name in groups['signal_order']],
         'outputIndices': [network.index[root] for root in readout['input_root_ids']],
         'outputIds': [str(root) for root in readout['input_root_ids']],
         'weights': readout['weights'],

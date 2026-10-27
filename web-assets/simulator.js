@@ -61,11 +61,16 @@ function simulate(network, model, bits) {
 if (typeof module !== 'undefined') module.exports = { loadNetwork, simulate };
 if (typeof self !== 'undefined' && typeof self.postMessage === 'function') {
   let network, model;
-  Promise.all([fetch('network.bin'), fetch('model.json')])
+  Promise.all([fetch('network.bin'), fetch('model.json?v=3d1')])
     .then(async responses => {
       if (responses.some(response => !response.ok)) throw new Error('모델 파일을 불러오지 못했습니다.');
       network = loadNetwork(await responses[0].arrayBuffer()); model = await responses[1].json();
-      self.postMessage({ type: 'ready', neurons: network.neurons, outputs: model.outputIndices.length });
+      const visualNeurons = model.inputGroups.flatMap((group, g) => group.slice(0, 2).map((node, i) => ({ node, id: model.inputIds[g][i] })));
+      for (let i = 0; i < 20; i++) {
+        const index = Math.floor(i * (model.outputIndices.length - 1) / 19);
+        visualNeurons.push({ node: model.outputIndices[index], id: model.outputIds[index] });
+      }
+      self.postMessage({ type: 'ready', neurons: network.neurons, visualNeurons });
     })
     .catch(error => self.postMessage({ type: 'error', message: error.message }));
   self.onmessage = event => {
