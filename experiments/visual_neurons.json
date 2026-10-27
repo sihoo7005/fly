@@ -1,0 +1,65 @@
+{
+  "description": "Ten non-input, non-readout neurons selected for varied firing across the 36 game inputs; this is a visualization sample, not a representative sample.",
+  "neurons": [
+    {
+      "root_id": "720575940603604258",
+      "zero_states": 13,
+      "one_spike_states": 5,
+      "multiple_spike_states": 18
+    },
+    {
+      "root_id": "720575940612394931",
+      "zero_states": 7,
+      "one_spike_states": 20,
+      "multiple_spike_states": 9
+    },
+    {
+      "root_id": "720575940617570358",
+      "zero_states": 18,
+      "one_spike_states": 12,
+      "multiple_spike_states": 6
+    },
+    {
+      "root_id": "720575940621105761",
+      "zero_states": 5,
+      "one_spike_states": 13,
+      "multiple_spike_states": 18
+    },
+    {
+      "root_id": "720575940623833869",
+      "zero_states": 7,
+      "one_spike_states": 11,
+      "multiple_spike_states": 18
+    },
+    {
+      "root_id": "720575940626760476",
+      "zero_states": 9,
+      "one_spike_states": 9,
+      "multiple_spike_states": 18
+    },
+    {
+      "root_id": "720575940629387881",
+      "zero_states": 7,
+      "one_spike_states": 11,
+      "multiple_spike_states": 18
+    },
+    {
+      "root_id": "720575940632644300",
+      "zero_states": 7,
+      "one_spike_states": 11,
+      "multiple_spike_states": 18
+    },
+    {
+      "root_id": "720575940638244580",
+      "zero_states": 5,
+      "one_spike_states": 22,
+      "multiple_spike_states": 9
+    },
+    {
+      "root_id": "720575940660155265",
+      "zero_states": 9,
+      "one_spike_states": 9,
+      "multiple_spike_states": 18
+    }
+  ]
+}

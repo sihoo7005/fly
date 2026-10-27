@@ -22,7 +22,7 @@ function simulate(network, model, bits) {
   const voltage = new Float64Array(neurons), updated = new Uint8Array(neurons), blocked = new Uint8Array(neurons);
   const outputAt = new Int32Array(neurons); outputAt.fill(-1);
   model.outputIndices.forEach((node, i) => { outputAt[node] = i; });
-  const outputCounts = new Uint8Array(model.outputIndices.length), active = new Uint8Array(neurons);
+  const outputCounts = new Uint8Array(model.outputIndices.length), active = new Uint8Array(neurons), spikeCounts = new Uint8Array(neurons);
   let incoming = new Map(), totalSpikes = 0, activeNeurons = 0;
   bits.forEach((bit, i) => { if (bit) model.inputGroups[i].forEach(node => incoming.set(node, 1)); });
   const stepCounts = [];
@@ -34,6 +34,7 @@ function simulate(network, model, bits) {
       if (step < blocked[node]) { voltage[node] = 0; continue; }
       if (value >= 1) {
         fired.push(node); voltage[node] = 0; blocked[node] = step + 2;
+        spikeCounts[node]++;
         if (!active[node]) { active[node] = 1; activeNeurons++; }
         if (outputAt[node] !== -1) outputCounts[outputAt[node]]++;
       } else voltage[node] = value;
@@ -55,13 +56,13 @@ function simulate(network, model, bits) {
   const best = Math.max(...scores), exponentials = scores.map(value => Math.exp(value - best));
   const sum = exponentials.reduce((a, b) => a + b, 0);
   return { scores, probabilities: exponentials.map(value => value / sum), action: scores.indexOf(best),
-    outputCounts: Array.from(outputCounts), active, activeNeurons, totalSpikes, stepCounts };
+    outputCounts: Array.from(outputCounts), active, spikeCounts, activeNeurons, totalSpikes, stepCounts };
 }
 
 if (typeof module !== 'undefined') module.exports = { loadNetwork, simulate };
 if (typeof self !== 'undefined' && typeof self.postMessage === 'function') {
   let network, model;
-  Promise.all([fetch('network.bin'), fetch('model.json?v=3d1')])
+  Promise.all([fetch('network.bin'), fetch('model.json?v=spikes2')])
     .then(async responses => {
       if (responses.some(response => !response.ok)) throw new Error('모델 파일을 불러오지 못했습니다.');
       network = loadNetwork(await responses[0].arrayBuffer()); model = await responses[1].json();
@@ -70,6 +71,7 @@ if (typeof self !== 'undefined' && typeof self.postMessage === 'function') {
         const index = Math.floor(i * (model.outputIndices.length - 1) / 19);
         visualNeurons.push({ node: model.outputIndices[index], id: model.outputIds[index] });
       }
+      visualNeurons.push(...model.visualNeurons);
       self.postMessage({ type: 'ready', neurons: network.neurons, visualNeurons });
     })
     .catch(error => self.postMessage({ type: 'error', message: error.message }));

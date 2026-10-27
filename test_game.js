@@ -19,6 +19,8 @@ for (let i = 1; i < features.length; i++) {
   expected[2].split('|').forEach((score, j) => assert.ok(Math.abs(result.scores[j] - Number(score)) < 0.00001, `score for ${input}`));
   assert.equal(['left', 'center', 'right'][result.action], expected[4], `action for ${input}`);
   assert.equal(result.active.reduce((sum, value) => sum + value, 0), result.activeNeurons);
+  assert.equal(result.spikeCounts.reduce((sum, value) => sum + value, 0), result.totalSpikes);
+  model.outputIndices.forEach((node, j) => assert.equal(result.spikeCounts[node], result.outputCounts[j]));
   if (input === '001001') sample = result;
 }
 assert.equal(features.length, 37);
@@ -64,7 +66,7 @@ assert.equal(elements.get('viewPlaceholder').style.display, 'none');
 const scene = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
 assert.equal(scene.layers[1].source, 'precomputed://gs://flywire_v141_m783');
 for (const neuron of visualNeurons) {
-  assert.equal(scene.layers[1].segmentColors[neuron.id], sample.active[neuron.node] ? '#c6f36b' : '#6b7472');
+  assert.equal(scene.layers[1].segmentColors[neuron.id], sample.spikeCounts[neuron.node] === 0 ? '#6b7472' : sample.spikeCounts[neuron.node] === 1 ? '#c6f36b' : '#ff6b5c');
 }
 assert.equal(state.snapshotKey, '001001');
 const previousMap = elements.get('neuronMap').image;
@@ -82,13 +84,15 @@ assert.match(elements.get('modelStatus').textContent, /이전 발화 지도/);
 assert.match(elements.get('neuronInfo').textContent, /이전 결과/);
 flyTurn();
 assert.equal(state.turn, 1, 'never act on the previous calculation');
-const active = new Uint8Array(network.neurons); active[1] = 1;
-fakeWorker.onmessage({ data: { type: 'result', id: state.request, ...sample, probabilities: [0.1, 0.2, 0.7], action: 2, active, activeNeurons: 1, totalSpikes: 1 } });
+const active = new Uint8Array(network.neurons); active[1] = 1; active[visualNeurons[0].node] = 1;
+const spikeCounts = new Uint8Array(network.neurons); spikeCounts[1] = 1; spikeCounts[visualNeurons[0].node] = 2;
+fakeWorker.onmessage({ data: { type: 'result', id: state.request, ...sample, probabilities: [0.1, 0.2, 0.7], action: 2, active, spikeCounts, activeNeurons: 2, totalSpikes: 3 } });
 assert.match(elements.get('actionScores').innerHTML, /70.0%/);
 assert.notEqual(elements.get('brainView').src, previousView, 'refresh 3D after calculation');
 assert.equal(state.snapshotKey, state.rows.flatMap(row => row.map(Number)).join(''));
 const nextScene = JSON.parse(decodeURIComponent(elements.get('brainView').src.split('#!')[1]));
-for (const neuron of visualNeurons) assert.equal(nextScene.layers[1].segmentColors[neuron.id], active[neuron.node] ? '#c6f36b' : '#6b7472');
+for (const neuron of visualNeurons) assert.equal(nextScene.layers[1].segmentColors[neuron.id], spikeCounts[neuron.node] === 0 ? '#6b7472' : spikeCounts[neuron.node] === 1 ? '#c6f36b' : '#ff6b5c');
+assert.equal(nextScene.layers[1].segmentColors[visualNeurons[0].id], '#ff6b5c', 'multiple spikes are red');
 assert.equal(elements.get('neuronMap').image[4], 198, 'show the new neuron map after calculation');
 assert.doesNotMatch(elements.get('neuronInfo').textContent, /이전 결과/);
 setMode('manual');
