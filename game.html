@@ -48,7 +48,7 @@
 <script>
 const laneNames=['왼쪽','가운데','오른쪽'];
 const state={lane:1,rows:[],turn:0,done:false,auto:false,mode:'fly',timer:null,message:'초파리 플레이를 눌러 시작하세요.',tone:'',ready:false,analysis:null,lastAnalysis:null,lastInput:'',request:0,error:'',neurons:139255,visualNeurons:[],snapshotKey:'',snapshotSize:20};
-const worker=new Worker('web-assets/simulator.js?v=threshold1');
+const worker=new Worker('web-assets/simulator.js?v=excess-20261027');
 function makeRow(){const count=1+Math.floor(Math.random()*2),blocked=[];while(blocked.length<count){const lane=Math.floor(Math.random()*3);if(!blocked.includes(lane))blocked.push(lane)}return[0,1,2].map(lane=>blocked.includes(lane))}
 function inputVector(){return state.rows.flatMap(row=>row.map(Number))}
 function activityColor(active,excess){if(!active)return 0x6b7472;const t=Math.min(Math.max(excess,0)/15,1);return(Math.round(198+57*t)<<16)|(Math.round(243-136*t)<<8)|Math.round(107-15*t)}
