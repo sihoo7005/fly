@@ -67,9 +67,9 @@ function render(){
  document.getElementById('play').classList.toggle('active',state.auto);
  document.getElementById('play').disabled=!state.auto&&(!item||!!state.error);
  document.getElementById('step').disabled=state.mode!=='fly'||state.auto||state.done||!item;
- document.getElementById('modelStatus').textContent=state.error?`${state.error}${displayItem?' · 이전 결과 표시':''}`:!state.ready?'연결망을 불러오는 중입니다.':!item?`${key} 입력 · 계산 중${displayItem?` · 이전 결과 ${state.lastInput}`:''}`: `${key} 입력 · 추천 행동: ${laneNames[item.action]}`;
+ document.getElementById('modelStatus').textContent=state.error?`${state.error}${displayItem?' · 이전 발화 지도 표시':''}`:!state.ready?'연결망을 불러오는 중입니다.':!item?`${key} 입력 · 계산 중${displayItem?` · 이전 발화 지도 ${state.lastInput}`:''}`: `${key} 입력 · 추천 행동: ${laneNames[item.action]}`;
  document.getElementById('dot').className=`dot ${state.auto?'live':''}`;
- document.getElementById('actionScores').innerHTML=laneNames.map((name,i)=>{const p=displayItem?.probabilities[i],selected=displayItem&&i===displayItem.action;return `<div class="score-line ${selected?'recommended':''}"><span>${name}${selected?' · 선택':''}</span><div class="bar"><i style="width:${p===undefined?0:Math.max(0,Math.min(100,p*100))}%"></i></div><span>${p===undefined?'—':(p*100).toFixed(1)+'%'}</span></div>`}).join('');
+ document.getElementById('actionScores').innerHTML=laneNames.map((name,i)=>{const p=item?.probabilities[i],selected=item&&i===item.action;return `<div class="score-line ${selected?'recommended':''}"><span>${name}${selected?' · 선택':''}</span><div class="bar"><i style="width:${p===undefined?0:Math.max(0,Math.min(100,p*100))}%"></i></div><span>${p===undefined?'—':(p*100).toFixed(1)+'%'}</span></div>`}).join('');
  document.getElementById('show3d').disabled=!item||!state.visualNeurons.length;
  if(state.snapshotKey)document.getElementById('view3dInfo').textContent=`3D: ${state.snapshotKey} 입력의 발화 · 입력 뉴런 12개와 하강 뉴런 20개${state.snapshotKey===key?'':' · 현재 입력과 다름, 버튼을 눌러 갱신'} · FAFB 영상은 좌우 반전`;
  document.getElementById('neuronInfo').textContent=displayItem?`발화한 뉴런 ${displayItem.activeNeurons.toLocaleString()} / ${state.neurons.toLocaleString()}개 · 총 발화 ${displayItem.totalSpikes.toLocaleString()}회${item?'':' · 이전 결과'}`:(state.error||'계산 결과를 기다리는 중입니다.');

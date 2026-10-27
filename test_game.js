@@ -64,16 +64,16 @@ for (const neuron of visualNeurons) {
   assert.equal(scene.layers[1].segmentColors[neuron.id], sample.active[neuron.node] ? '#c6f36b' : '#6b7472');
 }
 assert.equal(state.snapshotKey, '001001');
-const previousScores = elements.get('actionScores').innerHTML;
 const previousMap = elements.get('neuronMap').image;
 flyTurn();
 assert.equal(state.lane, 0);
 assert.equal(state.reward, 1);
 assert.equal(state.turn, 1);
 assert.equal(state.analysis, null, 'calculate again for the next turn');
-assert.equal(elements.get('actionScores').innerHTML, previousScores, 'keep previous percentages while calculating');
+assert.match(elements.get('actionScores').innerHTML, /—/, 'hide percentages while calculating');
+assert.doesNotMatch(elements.get('actionScores').innerHTML, />[0-9]+\.[0-9]+%</, 'no stale percentages');
 assert.deepEqual(elements.get('neuronMap').image, previousMap, 'keep previous neuron map while calculating');
-assert.match(elements.get('modelStatus').textContent, /이전 결과/);
+assert.match(elements.get('modelStatus').textContent, /이전 발화 지도/);
 assert.match(elements.get('neuronInfo').textContent, /이전 결과/);
 flyTurn();
 assert.equal(state.turn, 1, 'never act on the previous calculation');
