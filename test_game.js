@@ -9,6 +9,11 @@ const model = JSON.parse(fs.readFileSync('web-assets/model.json', 'utf8'));
 const features = fs.readFileSync('test_data/game-supervised-features.csv', 'utf8').trim().split(/\r?\n/);
 const predictions = fs.readFileSync('test_data/game-supervised-predictions.csv', 'utf8').trim().split(/\r?\n/);
 assert.deepEqual(features[0].split(',').slice(1), model.outputIds);
+assert.equal(model.visualNeurons.length, 100);
+assert.equal(new Set(model.visualNeurons.map(n => n.id)).size, 100);
+const outputNodes = new Set(model.outputIndices), inputNodes = new Set(model.inputGroups.flat());
+assert.equal(model.visualNeurons.filter(n => outputNodes.has(n.node)).length, 70);
+assert.equal(model.visualNeurons.filter(n => !outputNodes.has(n.node) && !inputNodes.has(n.node)).length, 30);
 let sample;
 for (let i = 1; i < features.length; i++) {
   const [input, ...counts] = features[i].split(',');
@@ -47,7 +52,7 @@ const { state, act, makeRow, flyTurn, setMode, startGame, show3D } = context.gam
 assert.equal((elements.get('actionScores').innerHTML.match(/class="score-line/g) || []).length, 3);
 assert.match(elements.get('actionScores').innerHTML, /—/);
 for (let i = 0; i < 1000; i++) { const count = makeRow().filter(Boolean).length; assert.ok(count >= 1 && count <= 2); }
-const visualNeurons = [{ node: model.inputGroups[2][0], id: model.inputIds[2][0] }, { node: model.outputIndices[0], id: model.outputIds[0] }];
+const visualNeurons = model.visualNeurons;
 fakeWorker.onmessage({ data: { type: 'ready', neurons: network.neurons, visualNeurons } });
 state.rows = [[false, false, true], [false, false, true]];
 state.done = false; state.auto = false; state.turn = 0; state.reward = 0;

@@ -13,7 +13,8 @@ def main():
     network = Network.load(ROOT / 'results/princeton-network.bin')
     manifest = json.loads((ROOT / 'experiments/neuron_groups.json').read_text())
     readout = json.loads((ROOT / 'results/game-supervised-weights.json').read_text())
-    visual = json.loads((ROOT / 'experiments/visual_neurons.json').read_text())['neurons']
+    visual = json.loads((ROOT / 'experiments/visual_neurons.json').read_text())
+    visual = visual['descending'] + visual['intermediate']
     groups = manifest['input_groups']
     out = ROOT / 'web-assets'
     out.mkdir(exist_ok=True)
