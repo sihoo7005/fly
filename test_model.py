@@ -25,6 +25,19 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(sim.step(), [3])
         self.assertEqual(sim.step(), [])
 
+    def test_plastic_synapse_multiplier_changes_connection_strength(self):
+        net = Network.from_rows([1, 2], [(1, 2, 1)])
+        sim = Simulator(net, Parameters(weight=0.4), edge_multipliers={0: 3.0})
+        self.assertEqual(sim.step({1: 1}), [1])
+        self.assertEqual(sim.step(), [2])
+
+    def test_plastic_synapse_multiplier_validation(self):
+        net = Network.from_rows([1, 2], [(1, 2, 1)])
+        with self.assertRaisesRegex(ValueError, "multiplier"):
+            Simulator(net, edge_multipliers={1: 1.2})
+        with self.assertRaisesRegex(ValueError, "multiplier"):
+            Simulator(net, edge_multipliers={0: 0})
+
     def test_leak_is_applied_during_idle_steps(self):
         sim = Simulator(Network.from_rows([1], []), Parameters(tau_ms=10))
         sim.step({1: 0.5})

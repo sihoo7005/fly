@@ -11,6 +11,53 @@ FlyWire v783 연결망으로 새 모델을 만들기 위한 시작 저장소입�
 목표 차선·결과·보상을 CSV로 저장합니다.
 게임 규칙 검사는 `node test_game.js`로 실행합니다.
 
+뉴런 그룹은 [실험 명세](experiments/neuron_groups.json)에 저장했습니다.
+연결망과 게임을 묶어 보려면 네트워크 캐시를 준비한 뒤 아래 명령을 실행합니다.
+6개 신호 그룹을 자극하고, 7ms 동안 발화한 하강 뉴런을 읽기층에 전달합니다.
+먼저 지도학습 기준선을 만들려면 아래 명령을 실행합니다. 연결망은 고정하고,
+36개 게임 입력의 하강 뉴런 발화로 세 행동 읽기층을 학습합니다.
+가까운 장애물이 없는 차선을 정답으로 쓰며, 두 차선이 안전하면 둘 다 정답으로 처리합니다.
+
+```shell
+python -m experiments.game_supervised
+```
+
+입력 발화 캐시는 `results/game-supervised-features.csv`에 저장합니다.
+학습된 읽기층은 `results/game-supervised-weights.json`, 상태별 결과는
+`results/game-supervised-predictions.csv`에 저장합니다. 그다음 새 게임 시드로 평가합니다.
+
+```shell
+python -m experiments.evaluate_game_supervised --episodes 10000
+```
+
+36개 입력 상태는 전부 학습에 쓰지만, 평가는 새로 생성한 게임 판에서 행동 안전률과
+완주율을 측정합니다. 각 판의 결과는 `results/game-supervised-evaluation.csv`에 저장합니다.
+
+기존 보상 기반 읽기층 실험은 별도 무작위 행동 기준과 결과를 비교합니다.
+
+```shell
+python -m experiments.game_connectome --train-episodes 100 --eval-episodes 100
+```
+
+결과는 `results/game-connectome.csv`와 요약 JSON에 저장됩니다.
+첫 검증은 매 입력마다 네트워크를 초기화하므로, 한 게임 턴에서 다음 턴으로
+뉴런 활동이 이어지는 효과는 포함하지 않습니다. 입력 구역도 해부학적 시야가 아닌
+게임용 합성 신호입니다.
+
+실제 연결 가중치를 보상으로 바꾸는 실험은 다음 명령으로 실행합니다.
+성공한 행동에 기여한 활성 연결은 강화하고, 충돌한 행동에 기여한 연결은 약화합니다.
+기본 가중치 배수는 `0.5~1.5` 범위입니다. `--min-multiplier`와
+`--max-multiplier`로 범위를 바꿀 수 있으며, 결과 CSV에 변경된 연결과 배수를 저장합니다.
+세 행동 채널은 하강 뉴런 ID를 정렬한 뒤 3개로 나눈 실험용 매핑입니다.
+범위를 `1/3~3`으로 넓힌 장기 비교는 [실험 기록](experiments/weight_range_comparison.md)을 참고합니다.
+
+```shell
+python -m experiments.game_plasticity --train-episodes 5 --eval-episodes 5
+```
+
+요약은 `results/game-plasticity.summary.json`, 변경 연결은
+`results/game-plasticity-weights.csv`에서 확인할 수 있습니다.
+
 ## 데이터 받기
 
 Python 3.9 이상과 약 1.2 GB의 저장 공간이 필요합니다. 추가 패키지는 필요 없습니다.

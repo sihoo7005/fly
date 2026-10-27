@@ -141,9 +141,14 @@ class Parameters:
 
 
 class Simulator:
-    def __init__(self, network, parameters=Parameters(), inhibitory=()):
+    def __init__(self, network, parameters=Parameters(), inhibitory=(), edge_multipliers=None):
         self.network = network
         self.parameters = parameters
+        self.edge_multipliers = edge_multipliers
+        if edge_multipliers is not None and any(edge < 0 or edge >= len(network.targets) or
+                                                not math.isfinite(value) or value <= 0
+                                                for edge, value in edge_multipliers.items()):
+            raise ValueError("Invalid plastic synapse multiplier")
         self.signs = array("b", [1]) * len(network.ids)
         for root in inhibitory:
             if root not in network.index:
@@ -187,9 +192,15 @@ class Simulator:
         net = self.network
         for source in fired:
             coefficient = p.weight * self.signs[source]
-            for edge in range(net.offsets[source], net.offsets[source + 1]):
-                target = net.targets[edge]
-                self.pending[target] = self.pending.get(target, 0.0) + coefficient * net.synapses[edge]
+            if self.edge_multipliers is None:
+                for edge in range(net.offsets[source], net.offsets[source + 1]):
+                    target = net.targets[edge]
+                    self.pending[target] = self.pending.get(target, 0.0) + coefficient * net.synapses[edge]
+            else:
+                for edge in range(net.offsets[source], net.offsets[source + 1]):
+                    target = net.targets[edge]
+                    amount = coefficient * net.synapses[edge] * self.edge_multipliers.get(edge, 1.0)
+                    self.pending[target] = self.pending.get(target, 0.0) + amount
         self.time_step += 1
         return [net.ids[node] for node in fired]
 
