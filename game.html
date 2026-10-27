@@ -14,7 +14,7 @@
 <header class="top"><div><div class="eyebrow">FLYWIRE · GAME × MODEL</div><h1>초파리, 세 차선</h1><p>지도학습한 초파리 읽기층이 장애물을 보고 차선을 고릅니다.</p></div><div class="tag">FAFB v783 · 지도학습 읽기층</div></header>
 <div class="layout">
 <section class="card game-card" aria-label="세 차선 장애물 게임">
- <div class="head"><div><h2>게임 화면</h2><div class="hint">가까운 장애물이 이번 턴의 충돌 지점입니다.</div></div><div class="stats"><div class="stat"><span>보상</span><strong id="score">0</strong></div><div class="stat"><span>턴</span><strong id="turn">1 / 20</strong></div></div></div>
+ <div class="head"><div><h2>게임 화면</h2><div class="hint">가까운 장애물이 이번 턴의 충돌 지점입니다.</div></div><div class="stats"><div class="stat"><span>턴</span><strong id="turn">1 / 20</strong></div></div></div>
  <div class="board" id="board" aria-live="polite"></div>
  <div class="actions" aria-label="직접 선택할 차선"><button class="action" data-lane="0"><strong>왼쪽</strong><small>1 또는 ←</small></button><button class="action" data-lane="1"><strong>가운데</strong><small>2 또는 ↓</small></button><button class="action" data-lane="2"><strong>오른쪽</strong><small>3 또는 →</small></button></div>
  <p id="message" class="message" role="status"></p>
@@ -25,7 +25,7 @@
  <div class="view-heading"><h2>3D 뉴런</h2><button class="button" id="show3d" disabled>3D 새로고침</button></div>
  <div class="view-frame"><div class="view-placeholder" id="viewPlaceholder">계산이 끝나면 3D 발화를 자동으로 불러옵니다.</div><iframe class="brain-view" id="brainView" title="FlyWire 뉴런 3D 뷰어" loading="lazy" allowfullscreen></iframe></div>
  <p class="neuron-info" id="view3dInfo">하강 뉴런 35개 · 중간 뉴런 15개 · FAFB 영상 좌우 반전</p>
- <p class="note">7ms 발화 횟수: 회색 0회 · 연두색 1회 · 빨간색 2회 이상. 발화 변화가 다양한 뉴런을 고른 예시입니다.</p>
+ <p class="note">임계값 1을 넘은 최대량: 미발화는 회색, 0은 연두색, 15 이상은 빨간색. 발화 변화가 다양한 뉴런을 고른 예시입니다.</p>
  <a id="open3d" style="display:none;color:var(--cyan);font-size:11px" target="_blank" rel="noopener noreferrer">3D 뷰어를 새 탭에서 열기</a>
 </section>
 <aside class="side">
@@ -39,7 +39,7 @@
   <div class="head"><h2>뉴런 발화</h2><span class="hint">7ms 누적</span></div>
   <canvas class="neuron-map" id="neuronMap" width="528" height="264" aria-label="전체 뉴런 발화 표시"></canvas>
   <p class="neuron-info" id="neuronInfo">모델을 불러오는 중입니다.</p>
-  <p class="note">회색: 발화 없음 · 연두색: 한 번 이상 발화. 위 점의 위치는 실제 뇌 위치가 아닙니다.</p>
+  <p class="note">회색: 발화 없음 · 연두색부터 빨간색: 최대 임계 초과량 0부터 15 이상. 위 점의 위치는 실제 뇌 위치가 아닙니다.</p>
  </section>
 </aside>
 </div>
@@ -47,18 +47,18 @@
 </main>
 <script>
 const laneNames=['왼쪽','가운데','오른쪽'];
-const state={lane:1,rows:[],turn:0,reward:0,done:false,auto:false,mode:'fly',timer:null,message:'초파리 플레이를 눌러 시작하세요.',tone:'',ready:false,analysis:null,lastAnalysis:null,lastInput:'',request:0,error:'',neurons:139255,visualNeurons:[],snapshotKey:''};
-const worker=new Worker('web-assets/simulator.js?v=sample50');
+const state={lane:1,rows:[],turn:0,done:false,auto:false,mode:'fly',timer:null,message:'초파리 플레이를 눌러 시작하세요.',tone:'',ready:false,analysis:null,lastAnalysis:null,lastInput:'',request:0,error:'',neurons:139255,visualNeurons:[],snapshotKey:''};
+const worker=new Worker('web-assets/simulator.js?v=threshold1');
 function makeRow(){const count=1+Math.floor(Math.random()*2),blocked=[];while(blocked.length<count){const lane=Math.floor(Math.random()*3);if(!blocked.includes(lane))blocked.push(lane)}return[0,1,2].map(lane=>blocked.includes(lane))}
 function inputVector(){return state.rows.flatMap(row=>row.map(Number))}
+function activityColor(active,excess){if(!active)return 0x6b7472;const t=Math.min(Math.max(excess,0)/15,1);return(Math.round(198+57*t)<<16)|(Math.round(243-136*t)<<8)|Math.round(107-15*t)}
 function drawNeurons(displayItem){
- const canvas=document.getElementById('neuronMap'),ctx=canvas.getContext('2d'),image=ctx.createImageData(canvas.width,canvas.height),active=displayItem?.active;
- for(let i=0;i<state.neurons;i++){const fired=active&&active[i],p=i*4;image.data[p]=fired?198:75;image.data[p+1]=fired?243:87;image.data[p+2]=fired?107:83;image.data[p+3]=255}
+ const canvas=document.getElementById('neuronMap'),ctx=canvas.getContext('2d'),image=ctx.createImageData(canvas.width,canvas.height);
+ for(let i=0;i<state.neurons;i++){const color=activityColor(displayItem?.active[i],displayItem?.peakExcess[i]||0),p=i*4;image.data[p]=color>>16;image.data[p+1]=(color>>8)&255;image.data[p+2]=color&255;image.data[p+3]=255}
  ctx.putImageData(image,0,0);
 }
 function render(){
  const bits=inputVector(),key=bits.join(''),item=state.analysis,displayItem=item||state.lastAnalysis;
- document.getElementById('score').textContent=state.reward;
  document.getElementById('turn').textContent=`${Math.min(state.turn+1,20)} / 20`;
  document.getElementById('board').innerHTML='<div></div>'+laneNames.map(n=>`<div class="lane-head">${n}</div>`).join('')+state.rows.map((row,d)=>`<div class="row-label">${d===0?'가까움':'멀리'}</div>`+row.map((b,i)=>`<div class="cell ${d===0?'near':'far'} ${b?'blocked':''} ${d===0&&i===state.lane?'selected':''}">${b?'▲ 장애물':'열림'}</div>`).join('')).join('')+'<div class="row-label runner-row">초파리</div>'+laneNames.map((_,i)=>`<div class="runner runner-row">${i===state.lane?'🪰':''}</div>`).join('');
  document.getElementById('signals').innerHTML=state.rows.map((row,d)=>row.map((b,l)=>`<div class="signal ${b?'on':''}"><span>${laneNames[l]} · ${d===0?'가까움':'멀리'}</span><code>${Number(b)}</code></div>`).join('')).join('');
@@ -75,12 +75,12 @@ function render(){
  document.getElementById('actionScores').innerHTML=laneNames.map((name,i)=>{const p=item?.probabilities[i],selected=item&&i===item.action;return `<div class="score-line ${selected?'recommended':''}"><span>${name}${selected?' · 선택':''}</span><div class="bar"><i style="width:${p===undefined?0:Math.max(0,Math.min(100,p*100))}%"></i></div><span>${p===undefined?'—':(p*100).toFixed(1)+'%'}</span></div>`}).join('');
  document.getElementById('show3d').disabled=!item||!state.visualNeurons.length;
  if(state.snapshotKey)document.getElementById('view3dInfo').textContent=`3D 요청: ${state.snapshotKey} 입력 · 하강 35개 · 중간 15개${!item||state.snapshotKey!==key?' · 다음 계산 대기 중':''} · FAFB 영상은 좌우 반전`;
- document.getElementById('neuronInfo').textContent=displayItem?`발화한 뉴런 ${displayItem.activeNeurons.toLocaleString()} / ${state.neurons.toLocaleString()}개 · 총 발화 ${displayItem.totalSpikes.toLocaleString()}회${item?'':' · 이전 결과'}`:(state.error||'계산 결과를 기다리는 중입니다.');
+ document.getElementById('neuronInfo').textContent=displayItem?`발화한 뉴런 ${displayItem.activeNeurons.toLocaleString()} / ${state.neurons.toLocaleString()}개${item?'':' · 이전 결과'}`:(state.error||'계산 결과를 기다리는 중입니다.');
  drawNeurons(displayItem);
 }
 function show3D(){
  if(!state.analysis||!state.visualNeurons.length)return;
- const neurons=state.visualNeurons, colors=Object.fromEntries(neurons.map(n=>[n.id,state.analysis.spikeCounts[n.node]===0?'#6b7472':state.analysis.spikeCounts[n.node]===1?'#c6f36b':'#ff6b5c']));
+ const neurons=state.visualNeurons, colors=Object.fromEntries(neurons.map(n=>[n.id,'#'+activityColor(state.analysis.active[n.node],state.analysis.peakExcess[n.node]).toString(16).padStart(6,'0')]));
  const scene={dimensions:{x:[1.6e-8,'m'],y:[1.6e-8,'m'],z:[4e-8,'m']},projectionScale:30000,
   layers:[{type:'segmentation',source:'precomputed://gs://flywire_neuropil_meshes/whole_neuropil/brain_mesh_v3',name:'brain',objectAlpha:0.05,segments:['1'],segmentColors:{'1':'#b5b5b5'}},
    {type:'segmentation',source:'precomputed://gs://flywire_v141_m783',name:'fafb-v783',segments:neurons.map(n=>n.id),segmentColors:colors}],
@@ -88,8 +88,8 @@ function show3D(){
  const frame=document.getElementById('brainView');frame.src='https://ngl.cave-explorer.org/#!'+encodeURIComponent(JSON.stringify(scene));frame.style.display='block';document.getElementById('viewPlaceholder').style.display='none';const link=document.getElementById('open3d');link.href=frame.src;link.style.display='inline-block';state.snapshotKey=inputVector().join('');render();
 }
 function requestAnalysis(){state.request++;state.analysis=null;render();if(state.ready&&!state.error)worker.postMessage({id:state.request,bits:inputVector()})}
-function startGame(){if(state.timer)clearTimeout(state.timer);state.timer=null;state.auto=false;state.lane=1;state.turn=0;state.reward=0;state.done=false;state.message='초파리 플레이를 눌러 시작하세요.';state.tone='';state.rows=Array.from({length:2},makeRow);requestAnalysis()}
-function applyAction(lane){if(state.done||!state.analysis)return;const blocked=state.rows[0][lane];state.turn++;state.lane=lane;let reward=blocked?-3:1,outcome=blocked?'충돌':'생존';if(!blocked&&state.turn>=20){reward+=10;outcome='완주'}state.reward+=reward;state.message=blocked?`${laneNames[lane]} 차선에서 충돌했습니다.`:outcome==='완주'?'20턴 완주! 보상 +10.':'안전하게 통과했습니다.';state.tone=blocked?'bad':'good';if(blocked||state.turn>=20){state.done=true;state.auto=false;render()}else{state.rows.shift();state.rows.push(makeRow());requestAnalysis()}}
+function startGame(){if(state.timer)clearTimeout(state.timer);state.timer=null;state.auto=false;state.lane=1;state.turn=0;state.done=false;state.message='초파리 플레이를 눌러 시작하세요.';state.tone='';state.rows=Array.from({length:2},makeRow);requestAnalysis()}
+function applyAction(lane){if(state.done||!state.analysis)return;const blocked=state.rows[0][lane];state.turn++;state.lane=lane;const finished=!blocked&&state.turn>=20;state.message=blocked?`${laneNames[lane]} 차선에서 충돌했습니다.`:finished?'20턴 완주!':'안전하게 통과했습니다.';state.tone=blocked?'bad':'good';if(blocked||state.turn>=20){state.done=true;state.auto=false;render()}else{state.rows.shift();state.rows.push(makeRow());requestAnalysis()}}
 function flyTurn(){state.timer=null;if(state.mode!=='fly'||state.done||!state.analysis)return;applyAction(state.analysis.action)}
 function scheduleFly(){if(state.auto&&!state.done&&state.analysis&&!state.timer)state.timer=setTimeout(flyTurn,650)}
 function togglePlay(){if(state.mode!=='fly')setMode('fly');if(state.auto){state.auto=false;if(state.timer)clearTimeout(state.timer);state.timer=null;render();return}if(state.done)startGame();state.auto=true;render();if(state.analysis)flyTurn()}

@@ -22,7 +22,7 @@ function simulate(network, model, bits) {
   const voltage = new Float64Array(neurons), updated = new Uint8Array(neurons), blocked = new Uint8Array(neurons);
   const outputAt = new Int32Array(neurons); outputAt.fill(-1);
   model.outputIndices.forEach((node, i) => { outputAt[node] = i; });
-  const outputCounts = new Uint8Array(model.outputIndices.length), active = new Uint8Array(neurons), spikeCounts = new Uint8Array(neurons);
+  const outputCounts = new Uint8Array(model.outputIndices.length), active = new Uint8Array(neurons), spikeCounts = new Uint8Array(neurons), peakExcess = new Float64Array(neurons);
   let incoming = new Map(), totalSpikes = 0, activeNeurons = 0;
   bits.forEach((bit, i) => { if (bit) model.inputGroups[i].forEach(node => incoming.set(node, 1)); });
   const stepCounts = [];
@@ -35,6 +35,7 @@ function simulate(network, model, bits) {
       if (value >= 1) {
         fired.push(node); voltage[node] = 0; blocked[node] = step + 2;
         spikeCounts[node]++;
+        peakExcess[node] = Math.max(peakExcess[node], value - 1);
         if (!active[node]) { active[node] = 1; activeNeurons++; }
         if (outputAt[node] !== -1) outputCounts[outputAt[node]]++;
       } else voltage[node] = value;
@@ -56,7 +57,7 @@ function simulate(network, model, bits) {
   const best = Math.max(...scores), exponentials = scores.map(value => Math.exp(value - best));
   const sum = exponentials.reduce((a, b) => a + b, 0);
   return { scores, probabilities: exponentials.map(value => value / sum), action: scores.indexOf(best),
-    outputCounts: Array.from(outputCounts), active, spikeCounts, activeNeurons, totalSpikes, stepCounts };
+    outputCounts: Array.from(outputCounts), active, spikeCounts, peakExcess, activeNeurons, totalSpikes, stepCounts };
 }
 
 if (typeof module !== 'undefined') module.exports = { loadNetwork, simulate };
