@@ -60,7 +60,7 @@ function drawNeurons(displayItem){
 function render(){
  const bits=inputVector(),key=bits.join(''),item=state.analysis,displayItem=item||state.lastAnalysis;
  document.getElementById('turn').textContent=`${Math.min(state.turn+1,20)} / 20`;
- document.getElementById('board').innerHTML='<div></div>'+laneNames.map(n=>`<div class="lane-head">${n}</div>`).join('')+state.rows.map((row,d)=>`<div class="row-label">${d===0?'가까움':'멀리'}</div>`+row.map((b,i)=>`<div class="cell ${d===0?'near':'far'} ${b?'blocked':''} ${d===0&&i===state.lane?'selected':''}">${b?'▲ 장애물':'열림'}</div>`).join('')).join('')+'<div class="row-label runner-row">초파리</div>'+laneNames.map((_,i)=>`<div class="runner runner-row">${i===state.lane?'🪰':''}</div>`).join('');
+ document.getElementById('board').innerHTML='<div></div>'+laneNames.map(n=>`<div class="lane-head">${n}</div>`).join('')+[1,0].map(d=>{const row=state.rows[d];return`<div class="row-label">${d===0?'가까움':'멀리'}</div>`+row.map((b,i)=>`<div class="cell ${d===0?'near':'far'} ${b?'blocked':''} ${d===0&&i===state.lane?'selected':''}">${b?'▲ 장애물':'열림'}</div>`).join('')}).join('')+'<div class="row-label runner-row">초파리</div>'+laneNames.map((_,i)=>`<div class="runner runner-row">${i===state.lane?'🪰':''}</div>`).join('');
  document.getElementById('signals').innerHTML=state.rows.map((row,d)=>row.map((b,l)=>`<div class="signal ${b?'on':''}"><span>${laneNames[l]} · ${d===0?'가까움':'멀리'}</span><code>${Number(b)}</code></div>`).join('')).join('');
  const msg=document.getElementById('message');msg.textContent=state.message;msg.className=`message ${state.tone}`;
  document.querySelectorAll('.action').forEach(b=>b.disabled=state.done||state.mode!=='manual'||!item);
